@@ -62,16 +62,19 @@ def get_pie_chart(entered_site):
     filtered_df = spacex_df
     if entered_site == 'ALL':
         # Create the pie chart to return
-        fig = px.pie(filtered_df, values='class', 
-            names='Launch Site', 
-            title='Total Success Launches By Site')
-    else:
-        filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
+        return px.pie(
+            filtered_df,
+            values='class',
+            names='Launch Site',
+            title='Total Success Launches By Site',
+        )
+    filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
         # Create the pie chart to return
-        fig = px.pie(values=filtered_df['class'].value_counts(), 
-            names=filtered_df['class'].unique(),
-            title='Total Success Launches For Site ' + entered_site)
-    return fig
+    return px.pie(
+        values=filtered_df['class'].value_counts(),
+        names=filtered_df['class'].unique(),
+        title='Total Success Launches For Site ' + entered_site,
+    )
 
 # TASK 4:
 # Add a callback function for `site-dropdown` and `payload-slider` as inputs, `success-payload-scatter-chart` as output
@@ -86,14 +89,23 @@ def get_scatter_plot(entered_site, selecte_mass):
         #success_rate = round(len(filtered_df[filtered_df['class'] == 1]) / len(filtered_df) * 100, 2)
         #print("Success rate for the range for the range " + str(selecte_mass[0]) + " - " + str(selecte_mass[1]) + " : " + str(success_rate) + "%")
         #Create the pie chart to return
-        fig = px.scatter(filtered_df, x='Payload Mass (kg)', y='class', 
-        color="Booster Version Category", title="Correlation between payload and Success for All Sites")
-    else:
-        filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site] 
+        return px.scatter(
+            filtered_df,
+            x='Payload Mass (kg)',
+            y='class',
+            color="Booster Version Category",
+            title="Correlation between payload and Success for All Sites",
+        )
+    filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
         # Create the pie chart to return
-        fig = px.scatter(filtered_df, x='Payload Mass (kg)', y='class', 
-        color="Booster Version Category", title="Correlation between payload and Success for Site " + entered_site)
-    return fig
+    return px.scatter(
+        filtered_df,
+        x='Payload Mass (kg)',
+        y='class',
+        color="Booster Version Category",
+        title="Correlation between payload and Success for Site "
+        + entered_site,
+    )
 
 # Run the app
 if __name__ == '__main__':
